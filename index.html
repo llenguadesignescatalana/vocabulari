@@ -2,43 +2,42 @@
 <html lang="ca">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Diccionari Visual LSC</title>
+    <meta id="viewport-meta" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
+    <title>Diccionari Visual LSC - Zoom Correcte</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/image-map-resizer/1.0.10/js/imageMapResizer.min.js"></script>
     <style>
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background: #e0e0e0; text-align: center; }
         
-        /* CAPÇALERA */
-        .capçalera { background-color: #b8ac2b; color: white; padding: 15px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .capçalera h1 { margin: 0; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 1px; }
+        .capçalera { background-color: #b8ac2b; color: white; padding: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .capçalera h1 { margin: 0; font-size: 1.4rem; text-transform: uppercase; }
 
-        /* CONTENIDOR */
-        .contenidor { position: relative; display: inline-block; width: 100%; max-width: 1024px; }
+        .contenidor { 
+            position: relative; 
+            display: inline-block; 
+            width: 100%; 
+            max-width: 1024px; 
+            margin: 20px 0;
+            overflow: visible; 
+        }
+        
         img { width: 100%; height: auto; display: block; border: 1px solid #ccc; }
-        /* Canviem el cursor perquè es vegi clar que és clicable */
         area { cursor: pointer; }
 
-        /* --- ETIQUETA FLOTANT (Tooltip) --- */
+        /* Etiqueta flotant */
         #etiqueta {
-            position: fixed; top: 0; left: 0;
-            display: none; pointer-events: none; z-index: 9999;
+            position: fixed; display: none; pointer-events: none; z-index: 9999;
             background: rgba(0, 0, 0, 0.9); color: #fff;
-            padding: 8px 15px; border-radius: 50px;
-            font-size: 14px; font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            white-space: nowrap;
+            padding: 8px 15px; border-radius: 50px; font-size: 14px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); white-space: nowrap;
         }
-        #etiqueta span { color: #b8ac2b; margin-right: 5px; font-size: 1.2em; vertical-align: middle; }
 
-        /* --- FINESTRA MODAL --- */
+        /* Finestra Modal */
         #capaVideo {
             display: none; position: fixed; z-index: 2000;
             left: 0; top: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85);
-            /* Sense animacions complexes aquí per evitar errors */
         }
 
-        /* --- ANIMACIÓ ZOOM AUTOMÀTICA --- */
         @keyframes zoomIn {
             from { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
             to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
@@ -48,41 +47,35 @@
             position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             width: 90%; max-width: 400px; text-align: center;
-            /* L'animació s'activa sola en aparèixer */
             animation: zoomIn 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
         }
         
         #titol-video {
             color: #b8ac2b; background: white; padding: 10px 20px; margin-bottom: 15px;
             border-radius: 50px; font-size: 1.2rem; font-weight: bold; display: inline-block;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        video { width: 100%; border-radius: 12px; background: black; border: 2px solid white; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
-        .boto-tancar { color: white; font-size: 45px; position: absolute; top: -60px; right: 0; cursor: pointer; font-weight: bold; line-height: 1; }
+        video { width: 100%; border-radius: 12px; background: black; border: 2px solid white; }
+        .boto-tancar { color: white; font-size: 45px; position: absolute; top: -60px; right: 0; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <div id="etiqueta"><span>▶</span> Veure vídeo</div>
-
     <div class="capçalera"><h1>Diccionari Visual LSC: Els Exteriors</h1></div>
 
     <div class="contenidor">
         <img src="26.jpg" usemap="#mapa-lsc" id="imatge-lsc">
-
         <map name="mapa-lsc">
             <area alt="L'Avió" shape="rect" coords="368,179,491,243"
                   onmouseenter="mostrarTip()" onmouseleave="amagarTip()"
-                  onclick="obreVideo('avio.mp4', `L'Avió`)">
-            
+                  onclick="obreVideo('avio.mp4', `L'avió`)">
             <area alt="La Casa" shape="rect" coords="808,505,931,569"
                   onmouseenter="mostrarTip()" onmouseleave="amagarTip()"
-                  onclick="obreVideo('casa.mp4', `La Casa`)">
-            
+                  onclick="obreVideo('casa.mp4', `La casa`)">
             <area alt="El Mar" shape="rect" coords="92,979,215,1043"
                   onmouseenter="mostrarTip()" onmouseleave="amagarTip()"
-                  onclick="obreVideo('mar.mp4', `El Mar`)">
+                  onclick="obreVideo('mar.mp4', `El mar`)">
         </map>
     </div>
 
@@ -95,20 +88,40 @@
     </div>
 
     <script>
-        // Inicialització segura
-        window.onload = function() { imageMapResize(); };
+        // Inicialització
+        window.onload = function() { 
+            imageMapResize(); 
+        };
 
-        // Variables globals
+        // Quan es fa zoom, recalculem coordenades
+        window.addEventListener('touchend', function() {
+            setTimeout(imageMapResize, 100);
+        });
+
         var etiqueta = document.getElementById('etiqueta');
         var capa = document.getElementById('capaVideo');
         var vid = document.getElementById('reproductor');
         var titol = document.getElementById('titol-video');
+        var viewportMeta = document.getElementById('viewport-meta');
 
-        // Funcions del Vídeo
+        /* --- SOLUCIÓ DEL ZOOM --- */
+        
+        // 1. Quan obrim el vídeo, forcem el zoom a 1.0 (vista normal)
+        function bloquejarZoom() {
+            viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+        }
+
+        // 2. Quan tanquem, tornem a permetre el zoom manual
+        function permetreZoom() {
+            viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes');
+        }
+
         function obreVideo(arxiu, text) {
+            bloquejarZoom(); // <--- Aquí està la clau
+            
             vid.src = arxiu;
             titol.innerText = text;
-            capa.style.display = 'block'; // Això dispara l'animació CSS automàticament
+            capa.style.display = 'block';
             vid.play();
             amagarTip();
         }
@@ -117,26 +130,26 @@
             capa.style.display = 'none';
             vid.pause();
             vid.src = "";
+            
+            permetreZoom(); // <--- Restaurem la capacitat de fer zoom
+            
+            // Recalculem el mapa per si de cas
+            setTimeout(imageMapResize, 200);
         }
 
-        // Funcions de l'Etiqueta (Simple i robusta)
         function mostrarTip() { etiqueta.style.display = 'block'; }
         function amagarTip() { etiqueta.style.display = 'none'; }
 
-        // Moure l'etiqueta amb el ratolí
         document.addEventListener('mousemove', function(e) {
             if (etiqueta.style.display === 'block') {
-                // Afegim 15px perquè no tapi el cursor
                 etiqueta.style.top = (e.clientY + 15) + 'px';
                 etiqueta.style.left = (e.clientX + 15) + 'px';
             }
         });
 
-        // Tancar amb ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === "Escape") tancaVideo();
         });
     </script>
-
 </body>
 </html>
